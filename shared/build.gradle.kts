@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.kotlinCocoapods)
+    //alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.androidLibrary)
 }
 
@@ -15,17 +15,15 @@ kotlin {
         }
     }
 
-
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-    cocoapods {
-        ios.deploymentTarget = "15.0" //  this min ios version
-        pod("SmileID") {
-            //https://kotlinlang.org/docs/native-cocoapods-libraries.html#support-for-objective-c-headers-with-import-directives
-            extraOpts += listOf("-compiler-option", "-fmodules")
-            source = git("https://github.com/smileidentity/ios.git") {
-                commit = "c9f6cdd5fcde7af20125b92904b3b92a69342445"
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64(),
+    ).forEach { iosTarget ->
+        iosTarget.binaries {
+            framework {
+                baseName = "shared"
+                isStatic = true
             }
         }
     }
@@ -48,6 +46,10 @@ kotlin {
 
         androidMain.dependencies {
             implementation("com.smileidentity:android-sdk:10.0.3")
+        }
+
+        iosMain.dependencies {
+
         }
     }
 }

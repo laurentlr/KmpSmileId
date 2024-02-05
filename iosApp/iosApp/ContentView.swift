@@ -1,8 +1,17 @@
 import SwiftUI
 import shared
+import SmileID
+
+class SmileIdInterfaceImplementation: SmileIdInterface{
+    func doInit() {
+        SmileID.initialize()
+    }
+}
 
 struct ContentView: View {
-	let greet = Greeting().greet()
+   
+    let greet = Greeting().greet()
+    
 
 	var body: some View {
 		Text(greet)
